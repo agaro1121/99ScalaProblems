@@ -9,12 +9,9 @@ def last[A](list: List[A]): A = {
 last(List(1, 1, 2, 3, 5, 8))
 
 /** 2. Find the last but one element of a list*/
-def penultimate[A](list: List[A]): A = {
-  require(list != Nil, "Your List is empty !!!")
-  list match {
-    case x :: Nil => throw new NoSuchElementExceptionException("List does not have at least 2 elements !!!")
+def penultimate[A](list: List[A]): A = list match {
     case x :: _ :: Nil => x
-    case x :: xs :: xss => penultimate(xss)
+    case x :: xs => penultimate(xs)
+    case _ => throw new NoSuchElementException
   }
-}
 penultimate(List(1, 1, 2, 3, 5, 8))
