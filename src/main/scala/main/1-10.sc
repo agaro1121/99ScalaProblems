@@ -59,3 +59,43 @@ def length[T](list: List[T]): Int = {
   loop(0,list)
 }
 length(List(1, 1, 2, 3, 5, 8))
+
+/*
+* P05 (*) Reverse a list.
+Example:
+scala> reverse(List(1, 1, 2, 3, 5, 8))
+res0: List[Int] = List(8, 5, 3, 2, 1, 1)
+* */
+def reverse[T](list: List[T]): List[T] = {
+  list.foldLeft(Nil: List[T])((acc, elem) ⇒ elem :: acc)
+}
+reverse(List(1, 1, 2, 3, 5, 8))
+
+/*
+* P06 (*) Find out whether a list is a palindrome.
+Example:
+scala> isPalindrome(List(1, 2, 3, 2, 1))
+res0: Boolean = true
+* */
+def isPalindrome[T](list: List[T]): Boolean = {
+  list.reverse == list
+}
+isPalindrome(List(1, 2, 3, 2, 1))
+
+/*
+* P07 (**) Flatten a nested list structure.
+Example:
+scala> flatten(List(List(1, 1), 2, List(3, List(5, 8))))
+res0: List[Any] = List(1, 1, 2, 3, 5, 8)
+* */
+def flatten[T](list: List[T]): List[T] = {
+  list.foldLeft(Nil: List[T]){
+    (acc, elem) ⇒
+      elem match {
+        case l:List[T] ⇒ acc ++ flatten(l)
+        case e ⇒ acc :+ e
+      }
+  }
+}
+flatten(List(List(1, 1), 2, List(3, List(5, 8))))
+
