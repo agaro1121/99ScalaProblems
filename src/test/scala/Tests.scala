@@ -62,7 +62,7 @@ class Tests extends WordSpec with Matchers {
 
     "11. if an element has no duplicates it is simply copied into the result list. Only elements with duplicates are transferred as (N, E) terms" in {
       val input = List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)
-      val expectedOutput = List((4,'a), 'b, (2,'c), (2,'a), 'd, (4,'e))
+      val expectedOutput = List((4, 'a), 'b, (2, 'c), (2, 'a), 'd, (4, 'e))
 
       P11.encodeModified(input) shouldBe expectedOutput
       P11.encodeModifiedViaMap(input) shouldBe expectedOutput
@@ -82,7 +82,7 @@ class Tests extends WordSpec with Matchers {
 
     "13. Implements the so-called run-length encoding data compression method directly" in {
       val input = List('a, 'a, 'a, 'a, 'b, 'c, 'c, 'a, 'a, 'd, 'e, 'e, 'e, 'e)
-      val expectedOutput = List((4,'a), (1,'b), (2,'c), (2,'a), (1,'d), (4,'e))
+      val expectedOutput = List((4, 'a), (1, 'b), (2, 'c), (2, 'a), (1, 'd), (4, 'e))
 
       P13.encodeDirect(input) shouldBe expectedOutput
     }
@@ -109,21 +109,33 @@ class Tests extends WordSpec with Matchers {
     }
 
     "17. Split a list into two parts" in {
+      val input = List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)
+      val expectedOutput = (List('a, 'b, 'c), List('d, 'e, 'f, 'g, 'h, 'i, 'j, 'k))
 
+      P17.split(3, input) shouldBe expectedOutput
+      P17.splitViaBuiltIn(3, input) shouldBe expectedOutput
+      P17.splitViaBuiltIn2(3, input) shouldBe expectedOutput
     }
 
     "18. Extract a slice from a list" in {
+      val input = List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)
+      val expectedOutput = List('d, 'e, 'f, 'g)
 
+      P18.slice(3, 7, input) shouldBe expectedOutput
+      P18.sliceViaBuiltIn(3, 7, input) shouldBe expectedOutput
+      P18.sliceViaBuiltIn2(3, 7, input) shouldBe expectedOutput
     }
 
     "19. Rotate a list N places to the left" in {
-
+      val input = List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)
+      val expectedOutputWithPositive = List('d, 'e, 'f, 'g, 'h, 'i, 'j, 'k, 'a, 'b, 'c)
+      val expectedOutputWithNegative = List('j, 'k, 'a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i)
     }
 
     "20. Remove the Kth element from a list" in {
-
+      val input = List('a, 'b, 'c, 'd)
+      val expectedOutput = (List('a, 'c, 'd), 'b)
     }
-
 
   }
 

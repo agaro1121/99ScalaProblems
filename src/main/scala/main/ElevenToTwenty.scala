@@ -146,9 +146,49 @@ object P16 {
 
 object P17 {
 
+  def split[T](n: Int, list: List[T]): (List[T], List[T]) = {
+    @tailrec
+    def loop(count: Int, list: List[T], acc:List[T]): (List[T], List[T]) = {
+      if(count > n) (acc.reverse, list)
+      else {
+        list match {
+          case Nil ⇒ (list,acc)
+          case x::xs ⇒
+            loop(count + 1, xs, x::acc)
+        }
+      }
+    }
+
+    loop(1, list, Nil)
+  }
+
+  def splitViaBuiltIn[T](n: Int, list: List[T]): (List[T], List[T]) = list.splitAt(n)
+
+  def splitViaBuiltIn2[T](n: Int, list: List[T]): (List[T], List[T]) = (list.take(n), list.drop(n))
+
 }
 
 object P18 {
+
+  def sliceViaBuiltIn[T](i: Int, k: Int, list: List[T]): List[T] = list.slice(i,k)
+  def sliceViaBuiltIn2[T](i: Int, k: Int, list: List[T]): List[T] = list.drop(i).dropRight(k - i)
+
+  def slice[T](i: Int, k: Int, list: List[T]): List[T] = {
+
+    def loop(count: Int, list: List[T], acc: List[T]): List[T] = {
+      list match {
+        case Nil ⇒ acc.reverse
+        case x::xs ⇒
+          if(count >= i && count < k) {
+            loop(count + 1, xs, x :: acc)
+          } else {
+            loop(count + 1, xs, acc)
+          }
+      }
+    }
+    loop(0, list, Nil)
+  }
+
 
 }
 
