@@ -51,21 +51,21 @@ object P11 {
 object P12 {
 
   def decode[T](list: List[(Int, T)]): List[T] = {
-      list.flatMap {
-        case (size, element) ⇒
-          List.fill(size)(element)
-      }
+    list.flatMap {
+      case (size, element) ⇒
+        List.fill(size)(element)
+    }
   }
 
   def decodeViaFoldLeft[T](list: List[(Int, T)]): List[T] = {
-    list.foldLeft(Nil: List[T]){
+    list.foldLeft(Nil: List[T]) {
       case (acc, (size, element)) ⇒
         List.fill(size)(element) ++ acc
     }.reverse
   }
 
   def decodeViaFoldRight[T](list: List[(Int, T)]): List[T] = {
-    list.foldRight(Nil: List[T]){
+    list.foldRight(Nil: List[T]) {
       case ((size, element), acc) ⇒
         List.fill(size)(element) ++ acc
     }
@@ -80,7 +80,7 @@ object P13 {
     def loop(list: List[T], acc: List[(Int, T)]): List[(Int, T)] = {
       list match {
         case Nil ⇒ acc.reverse
-        case x::_ ⇒
+        case x :: _ ⇒
           val (dupes, afterDupes) = list.span(_ == x)
           loop(afterDupes, (dupes.size, x) :: acc)
       }
@@ -97,7 +97,7 @@ object P14 {
   * and also implement this recursively and with the folds
   * */
   def duplicate[T](list: List[T]): List[T] = {
-    list.flatMap{
+    list.flatMap {
       elem ⇒
         List.fill(2)(elem)
     }
@@ -108,7 +108,7 @@ object P14 {
 object P15 {
 
   def duplicateN[T](n: Int, list: List[T]): List[T] = {
-    list.flatMap{
+    list.flatMap {
       elem ⇒
         List.fill(n)(elem)
     }
@@ -120,14 +120,14 @@ object P16 {
   def drop[T](n: Int, list: List[T]): List[T] = {
     @tailrec
     def loop(count: Int, list: List[T], acc: List[T]): List[T] = {
-       list match {
-         case Nil ⇒ acc.reverse
-         case x::xs ⇒
-           loop(count + 1, xs, if(count > 0 && count % n == 0) acc else x :: acc)
-       }
+      list match {
+        case Nil ⇒ acc.reverse
+        case x :: xs ⇒
+          loop(count + 1, xs, if (count > 0 && count % n == 0) acc else x :: acc)
+      }
 
     }
-  loop(1, list, Nil)
+    loop(1, list, Nil)
   }
 
   def dropWithZip[T](n: Int, list: List[T]): List[T] = {
@@ -148,13 +148,13 @@ object P17 {
 
   def split[T](n: Int, list: List[T]): (List[T], List[T]) = {
     @tailrec
-    def loop(count: Int, list: List[T], acc:List[T]): (List[T], List[T]) = {
-      if(count > n) (acc.reverse, list)
+    def loop(count: Int, list: List[T], acc: List[T]): (List[T], List[T]) = {
+      if (count > n) (acc.reverse, list)
       else {
         list match {
-          case Nil ⇒ (list,acc)
-          case x::xs ⇒
-            loop(count + 1, xs, x::acc)
+          case Nil ⇒ (list, acc)
+          case x :: xs ⇒
+            loop(count + 1, xs, x :: acc)
         }
       }
     }
@@ -170,7 +170,7 @@ object P17 {
 
 object P18 {
 
-  def sliceViaBuiltIn[T](i: Int, k: Int, list: List[T]): List[T] = list.slice(i,k)
+  def sliceViaBuiltIn[T](i: Int, k: Int, list: List[T]): List[T] = list.slice(i, k)
   def sliceViaBuiltIn2[T](i: Int, k: Int, list: List[T]): List[T] = list.drop(i).dropRight(k - i)
 
   def slice[T](i: Int, k: Int, list: List[T]): List[T] = {
@@ -178,8 +178,8 @@ object P18 {
     def loop(count: Int, list: List[T], acc: List[T]): List[T] = {
       list match {
         case Nil ⇒ acc.reverse
-        case x::xs ⇒
-          if(count >= i && count < k) {
+        case x :: xs ⇒
+          if (count >= i && count < k) {
             loop(count + 1, xs, x :: acc)
           } else {
             loop(count + 1, xs, acc)
@@ -189,13 +189,64 @@ object P18 {
     loop(0, list, Nil)
   }
 
-
 }
 
 object P19 {
 
+  def rotate[T](n: Int, list: List[T]): List[T] = {
+    if (n < 0) {
+      val i = n.abs
+      list.takeRight(i) ::: list.dropRight(i)
+    } else
+      list.drop(n) ::: list.take(n)
+  }
+
+  def rotate2[T](n: Int, list: List[T]): List[T] = {
+    if (n < 0) {
+      val i = n.abs
+      list.takeRight(i) ++ list.dropRight(i)
+    } else
+      list.drop(n) ++ list.take(n)
+  }
+
+  def rotateViaRecursion[T](n: Int, list: List[T]): List[T] = {
+    @tailrec
+    def loop(count: Int, target: Int, list: List[T], acc: List[T]): List[T] = {
+      if(count == target) list ++ acc.reverse
+      else {
+        list match {
+          case Nil ⇒ list
+          case x::xs ⇒ loop(count + 1, target, xs, x :: acc)
+        }
+      }
+    }
+
+    def findIndexToRotateOnPositive = (n % list.size) + list.size
+
+    if(n < 0) loop(0,findIndexToRotateOnPositive,list, Nil)
+    else if(n > 0) loop(0, n, list, Nil)
+    else list
+  }
+
 }
 
 object P20 {
+  //TODO: REDO
+  def removeAtViaRecursion[T](k: Int, list: List[T]): (List[T], T) = {
+    @tailrec
+    def loop(count: Int, list: List[T], acc: List[T]): (List[T], T) = {
+      if (count == k) (acc ++ list.tail, list.head)
+      else list match {
+        case Nil ⇒ (acc ++ list, list.head) //this will blow up?
+        case x :: xs ⇒ loop(count + 1, xs, x :: acc)
+      }
+    }
 
+    loop(0, list, Nil)
+  }
+
+  def removeAt[T](k: Int, list: List[T]): (List[T], T) = {
+    val (left, right) = list.splitAt(k)
+    (left ++ right.tail, right.head)
+  }
 }

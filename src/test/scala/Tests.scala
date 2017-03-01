@@ -130,11 +130,20 @@ class Tests extends WordSpec with Matchers {
       val input = List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 'j, 'k)
       val expectedOutputWithPositive = List('d, 'e, 'f, 'g, 'h, 'i, 'j, 'k, 'a, 'b, 'c)
       val expectedOutputWithNegative = List('j, 'k, 'a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i)
+
+      P19.rotate(-2, input) shouldBe expectedOutputWithNegative
+      P19.rotate(3, input) shouldBe expectedOutputWithPositive
+      P19.rotate2(-2, input) shouldBe expectedOutputWithNegative
+      P19.rotate2(3, input) shouldBe expectedOutputWithPositive
+      P19.rotateViaRecursion(3, input) shouldBe expectedOutputWithPositive
+      P19.rotateViaRecursion(-2, input) shouldBe expectedOutputWithNegative
     }
 
     "20. Remove the Kth element from a list" in {
       val input = List('a, 'b, 'c, 'd)
       val expectedOutput = (List('a, 'c, 'd), 'b)
+      P20.removeAt(1, input) shouldBe expectedOutput
+      P20.removeAtViaRecursion(1, input) shouldBe expectedOutput
     }
 
   }
