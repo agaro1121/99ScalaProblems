@@ -3,7 +3,7 @@ import org.scalatest.{Matchers, Pending, WordSpec}
 
 class Tests extends WordSpec with Matchers {
 
-  "First 10 Problems should be successfully implemented" should {
+  "1 to 20" should {
     val testList = List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 
     "1. Find the last element of the list" in {
