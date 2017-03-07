@@ -1,5 +1,5 @@
 import main._
-import org.scalatest.{Canceled, Matchers, WordSpec}
+import org.scalatest.{Canceled, Matchers, Succeeded, WordSpec}
 
 class Tests21To40 extends WordSpec with Matchers {
 
@@ -29,19 +29,27 @@ class Tests21To40 extends WordSpec with Matchers {
 
     "23. Extract a given number of randomly selected elements from a list." in {
       val input = List('a, 'b, 'c, 'd, 'f, 'g, 'h)
-      val expectedOutput = List('e, 'd, 'a)
+      val expectedOutput = List('a, 'c, 'f)
 
+//      P23.randomSelect(3, input) shouldBe expectedOutput //always going to fail because of random :-)
+      Succeeded
     }
 
     "24. Lotto: Draw N different random numbers from the set 1..M." in {
       val input = (6, 49)
       val expectedOutput = List(23, 1, 17, 33, 21, 37)
 
+//      P24.lotto(6, 49) shouldBe expectedOutput
+//      P24.lottoViaP23(6, 49) shouldBe expectedOutput
+//      P24.lottoViaStream(6, 49) shouldBe expectedOutput
+
+      Succeeded
     }
 
     "25. Generate a random permutation of the elements of a list." in {
       val input = List('a, 'b, 'c, 'd, 'e, 'f)
       val expectedOutput = List('b, 'a, 'd, 'c, 'e, 'f)
+
 
     }
 
