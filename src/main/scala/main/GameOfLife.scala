@@ -17,7 +17,7 @@ object GameOfLife extends App {
     cells.flatMap{ cell =>
       getSurroundingCells(cell).filter{ cell =>
         val numOfNeighbors = getNeighbors(cell).count(cells)
-        numOfNeighbors == 3 || numOfNeighbors == 2 && cells(cell)
+        numOfNeighbors == 3 || (numOfNeighbors == 2 && cells(cell))
       }
     }
   }
